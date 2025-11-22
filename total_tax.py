@@ -11,16 +11,17 @@ from fed_payroll_brax import fed_payroll_brax
 
 # defining the ATL variables
 filing_status = 'MFJ'
-ages = [27, 27]
+current_ages = [27, 27]
 blind_status = ['n', 'n']
 state_of_residence = 'CA'
 emp_status = 'employee'
 inflation_rate = 0.03
 base_year = 2025
-projection_year = 2025
-ltcg_plus_qual_div_inc = 0
-earned_inc = 200000
-other_inc = 5000  # add more detail later
+projection_year = 2026
+projection_ages = [i + (projection_year - base_year) for i in current_ages]
+ltcg_plus_qual_div_inc = 50000
+earned_inc = 100000
+other_inc = 50000  # add more detail later
 gross_inc = ltcg_plus_qual_div_inc + earned_inc + other_inc
 student_loan_interest = 0
 pre_tax_acct_conts = 0
@@ -38,7 +39,7 @@ state_tax_brackets_base_final, state_stan_deduct = (
 
 # getting fed income tax brackets and standard deductions for single and MFJ
 fed_inc_tax_brackets_base_final, fed_stan_deduct = (
-    fed_inc_brax_standed('fed_inc_tax_brackets.csv', filing_status, ages, blind_status, magi,
+    fed_inc_brax_standed('fed_inc_tax_brackets.csv', filing_status, projection_ages, blind_status, magi,
                          inflation_rate, base_year, projection_year))
 
 # getting fed LTCG brackets for single and MFJ
@@ -85,6 +86,8 @@ def total_tax_calculator():
 
 
 print(total_tax_calculator())
+# print(projection_ages)
+# print(fed_stan_deduct)
 
 
 
